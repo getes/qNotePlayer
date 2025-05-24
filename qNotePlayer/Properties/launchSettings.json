@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "qNotePlayer": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
