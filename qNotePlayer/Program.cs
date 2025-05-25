@@ -1,11 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using qNotePlayer;
-using System.Runtime.CompilerServices;
 
 Console.WriteLine("Hola Adriana!!");
 WriteSeparator();
-Console.WriteLine("Presiona 1 para modo piano");
-Console.WriteLine("Presiona 2 para calcular la frecuencia de una nota MIDI");
+Console.WriteLine("Presiona F1 para modo piano");
+Console.WriteLine("Presiona F2 para calcular la frecuencia de una nota MIDI");
 Console.WriteLine("Presiona Esc para salir");
 qPlayer player = new qPlayer();
 FreqCalculator freqCalculator = new FreqCalculator();
@@ -14,41 +13,40 @@ switch (Console.ReadKey(true).Key)
 {
     case ConsoleKey.Escape:
         break;
-    case ConsoleKey.D1:
+    case ConsoleKey.F1:
         WriteSeparator();
         WritePianoInstructions();
 
         player.PlayNotes();
         break;
-    case ConsoleKey.D2:
+    case ConsoleKey.F2:
         WriteSeparator();
         WriteFreqCalcIntstructions();
         bool running = true;
         while (running)
         {
-            if (Console.KeyAvailable)
-            {
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Escape)
-                {
-                    running = false;
-                    break;
-                }
-            }
-
             string input = Console.ReadLine();
-            if (string.IsNullOrEmpty(input))
+            if (input.ToLower() == "quit" || input.ToLower() == "q")
             {
-                Console.WriteLine("Entrada no válida");
+                running = false;
                 break;
             }
-            int.TryParse(input, out int noteNumber);
-            float frequency = freqCalculator.CalculateFrequency(noteNumber);
-            Console.WriteLine($"La frequencia de la nota {noteNumber}es de {frequency} Hz");
+            if (int.TryParse(input, out int noteNumber))
+            {
+                float frequency = freqCalculator.CalculateFrequency(noteNumber);
+                Console.WriteLine($"La frequencia de la nota {noteNumber} es de {frequency} Hz");
+            }
+            else
+            {
+                Console.Write($"Entrada no válida {input} debe ser un número");
+                Console.WriteLine("");
+                Console.ReadKey();
+            }
         }
         break;
     default:
         Console.WriteLine("Opción no válida");
+        Console.WriteLine("");
         break;
 }
 
@@ -57,8 +55,6 @@ void WriteSeparator()
     Console.WriteLine(string.Empty);
     Console.WriteLine("--------------------------------------------------");
 }
-
-Console.ReadKey();
 
 static void WriteFreqCalcIntstructions()
 {
@@ -80,5 +76,5 @@ static void WritePianoInstructions()
     Console.WriteLine("'H' para La");
     Console.WriteLine("'J' para Si");
     Console.WriteLine("'K' para Do");
-    Console.WriteLine("Presiona 'Esc' para salir.");
+    Console.WriteLine("Escribe 'quit o q' para salir.");
 }
