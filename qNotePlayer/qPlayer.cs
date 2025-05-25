@@ -8,13 +8,25 @@ namespace qNotePlayer
     public class qPlayer
     {
 
-        private int durationMs = 500; // Duración por defecto en milisegundos
-        public void PlayNote(float frequency, int durationMs)
+        public double Volumen { get; set; }
+        private int defaultDurationMs = 500; // Duración por defecto en milisegundos
+
+        public qPlayer()
+        {
+            Volumen = 0.5;
+        }
+
+        public qPlayer(double gain = 0.5)
+        {
+            Volumen = gain;
+        }
+
+        public void PlayNote(float frequency, int durationMs = 1000)
         {
             // Generador de señal senoidal
             var signalGenerator = new SignalGenerator()
             {
-                Gain = 0.2, // Volumen
+                Gain = Volumen, // Volumen
                 Frequency = frequency, // Frecuencia de la nota
                 Type = SignalGeneratorType.Sin // Onda senoidal
             };
@@ -33,7 +45,7 @@ namespace qNotePlayer
             }
         }
 
-        public void PlayNoteAsync(float frequency, int durationMs)
+        public void PlayNoteAsync(float frequency, int durationMs = 1000)
         {
             Task.Run(() => PlayNote(frequency, durationMs));
         }

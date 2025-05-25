@@ -3,9 +3,7 @@ using qNotePlayer;
 
 Console.WriteLine("Hola Adriana!!");
 WriteSeparator();
-Console.WriteLine("Presiona F1 para modo piano");
-Console.WriteLine("Presiona F2 para calcular la frecuencia de una nota MIDI");
-Console.WriteLine("Presiona Esc para salir");
+WriteInstructions();
 qPlayer player = new qPlayer();
 FreqCalculator freqCalculator = new FreqCalculator();
 
@@ -44,6 +42,10 @@ switch (Console.ReadKey(true).Key)
             }
         }
         break;
+    case ConsoleKey.F3:
+        Console.WriteLine($"PlayerVolume: {player.Volumen}");
+        Console.WriteLine("Teclas Arriba (UP) y Abajo (Down) para subir y bajar volumen");
+        break;
     default:
         Console.WriteLine("Opción no válida");
         Console.WriteLine("");
@@ -54,6 +56,14 @@ void WriteSeparator()
 {
     Console.WriteLine(string.Empty);
     Console.WriteLine("--------------------------------------------------");
+}
+
+static void WriteInstructions()
+{
+    Console.WriteLine("Presiona F1 para modo piano");
+    Console.WriteLine("Presiona F2 para calcular la frecuencia de una nota MIDI");
+    Console.WriteLine("Presiona F3 para configuración");
+    Console.WriteLine("Presiona Esc para salir");
 }
 
 static void WriteFreqCalcIntstructions()
